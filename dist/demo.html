@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Test</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+		<style>
+ @import url('https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css');
+    .sidebar {
+      background-color: #aaaaaa;
+    }
+
+    @media (min-width: 800px) {
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        display: block;
+      }
+
+    .navigation {
+        width: 240px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 5;
+    }
+    }
+
+    .navigation {
+        background: #455a64;
+        overflow-y: auto;
+        padding: 30px;
+    }
+
+    @media (max-width: 800px){
+        .sidebar {
+            display: none;
+        }
+    }
+	.navigation.visible-xs {
+		bottom: 0;
+		position: fixed;
+		right: 0;
+		top: 50px;
+		width: 240px;
+	}
+		</style>
+	</head>
+	<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+			<div class="sidebar-bottom">
+				<div class="navigation visible-xs" style="display: none;">
+					<ul>
+						<li><a  href="aa">aa</a></li>
+						<li><a  href="bb">bb </a></li>
+						<li><a  href="cc">cc</a></li>
+						<li><a  href="dd">dd</a></li>
+					</ul>
+				</div>
+			</div> <!-- // Sidebar -->
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="container">
+    </div>
+
+<div class="sidebar">
+    <div class="navigation">
+        <ul>
+			<li><a  href="aa">aa</a></li>
+			<li><a  href="bb">bb </a></li>
+			<li><a  href="cc">cc</a></li>
+			<li><a  href="dd">dd</a></li>
+        </ul>
+    </div>
+</div> <!-- // Sidebar -->
+</body>
+
+	<script type="text/javascript">
+	$('document').ready(function(){
+		$('.navbar-toggle, .toggle-nav-btn').click(function(event) {
+			$('.sidebar-bottom').toggle('slow');
+		});
+		
+	});
+	</script>
+</html>

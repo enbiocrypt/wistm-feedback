@@ -1,0 +1,221 @@
+<html>
+<head>
+ <!-- Required meta tags always come first -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+<!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+<script src="jquery/dist/jquery.slim.min.js"></script>
+<script src="popper.js/dist/umd/popper.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+var dict=<%- JSON.stringify(data); %>;
+var stream=<%- JSON.stringify(stream); %>;
+var tabula_sec={}
+var tabula_year={}
+var finsub={"stream": stream, "branch": null, "year":null, "section": null}
+console.log(dict,stream);
+var brp;
+function romanize(num) {
+  var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},roman = '',i;
+  for ( i in lookup ) {
+    while ( num >= lookup[i] ) {
+      roman += i;
+      num -= lookup[i];
+    }
+  }
+  return roman;
+}
+
+function btnp(param){
+document.getElementById('ye').innerHTML="";
+document.getElementById('sec').innerHTML="";
+document.getElementById('subf').innerHTML="";
+document.getElementById('pool').innerHTML=param.innerHTML;
+finsub["branch"]=param.innerHTML;
+
+var op=dict[param.innerHTML][0];
+brp=dict[param.innerHTML][1];
+var tar="<button id='poool' class='dropdown-toggle' data-toggle='dropdown'>YEAR</button><ul id='yeer' class='dropdown-menu'>";
+for(var i=1;i<=op;i++){
+tar+= "<li><a href='#' onclick='btnnp(this)' class='dropdown-item'>"+romanize(i)+"</a></li>";
+tabula_year[romanize(i)]=i;
+}
+tar+="</ul>";
+var el = document.createElement( 'html' );
+el.innerHTML = tar;
+document.getElementById('ye').innerHTML= el.innerHTML;
+}
+
+function btnnp(param){
+document.getElementById('poool').innerHTML=param.innerHTML;
+finsub["year"]=tabula_year[param.innerHTML];
+if(brp>1){
+	var tart="<button id='pul' class='dropdown-toggle' data-toggle='dropdown'>SECTION</button><ul id='sect' class='dropdown-menu'>";
+	for(var i=1;i<=brp;i++)
+		{
+		tart+="<li><a href='#' class='dropdown-item' onclick='btnppp(this)'>"+String.fromCharCode(96 + i).toUpperCase()+"</a></li>"
+		tabula_sec[String.fromCharCode(96 + i).toUpperCase()]=i;}
+	tart+="</ul>";
+	var el = document.createElement( 'html' );
+	el.innerHTML = tart;
+	document.getElementById('sec').innerHTML=el.innerHTML;
+	document.getElementById('subf').innerHTML="";
+	}
+	else{
+	finsub["section"]=1;
+	document.getElementById('subf').innerHTML="<button class='button' aria-expanded='false'>SUBMIT</button>";
+	document.getElementById('sec').innerHTML="";
+	}
+}
+
+function btnppp(param){
+document.getElementById('pul').innerHTML=param.innerHTML;
+finsub["section"]=tabula_sec[param.innerHTML];
+document.getElementById('subf').innerHTML="<button class='button' aria-expanded='false'>SUBMIT</button>";
+}
+
+function submit(){
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "stream", false);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify(finsub));
+console.log(finsub);
+window.location='/login';
+}
+</script>
+
+
+<style>
+body{
+background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+}
+.lc1{
+text-shadow:2px 3px 0px #898999;
+color:white;
+font-weight: 900;
+font-size: 350%;
+}
+
+.peach-gradient {
+    background: linear-gradient(40deg,#ffd86f,#fc6262)!important;
+}
+
+.dropdown-menu{
+min-width:0;
+width:100%;
+margin-top: 5px;
+}
+
+
+button{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+
+.lol{
+background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+
+.button:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.button:before,.button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.button:hover:before,.button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+.row-content {
+    margin:0px auto;
+    padding: 50px 0px 50px 0px;
+    min-height:300px;
+}
+
+.r1e{
+	margin:0px auto;
+    padding: 50px 0px 50px 0px;
+}
+
+.r2e{
+	margin:0px 15px;
+    padding: 15px 0px 15px 0px;
+}
+
+
+</style>
+</head>
+
+
+
+<body>
+<header class="jumbotron text-center r1e" style="background-color:transparent !important;">
+  <h1 class="lc1 col-12">Student Feedback System</h1>
+  <br>
+  <h2 class="lc1 col-12" id="stmid"><script type="text/javascript">
+        document.write(stream)
+      </script></h2>
+</header>
+
+<div class="container row row-content justify-content-center">
+
+
+<div class="r2e dropdown" style="display:inline-block;">
+	<button id="pool"  class="dropdown-toggle" data-toggle="dropdown">BRANCH
+	<!--<span class="caret"></span>--></button>
+	<ul class="dropdown-menu">
+		<% for(var key in data) { %>
+		<li><a href="#" class="dropdown-item" onclick="btnp(this)"><%= key %></a></li>
+		<% } %>
+		
+	</ul>
+</div>
+
+	<div id="ye" class="r2e dropdown" style="display:inline-block";>
+	</div>
+	<div id="sec" class="r2e dropdown" style="display:inline-block";>
+	</div>
+	<div class="col-12 text-center" id="subf" onclick="submit()">
+	</div>
+
+</div>
+
+</body>
+
+</html>

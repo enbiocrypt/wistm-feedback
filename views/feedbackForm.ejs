@@ -1,0 +1,243 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.getElementsByTagName("html")[0].className += " js";</script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+	<!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+	<script src="jquery/dist/jquery.slim.min.js"></script>
+	<script src="popper.js/dist/umd/popper.min.js"></script>
+	<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <title>Simple register form</title>
+  <link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
+  -->
+  <link rel="stylesheet" href="ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="style1.css">
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+  <link href="tor.css" rel="stylesheet" type="text/css">
+  <style>
+
+
+  .cont {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+    color: #EEE;
+    border-radius: 5px;
+    /*background: #111;
+    
+    border: thin solid #444;
+    */
+  }
+  
+  
+  div.stars {
+    display: inline-block;
+  }
+  
+  input.star { display: none; }
+  
+  label.star {
+    float: right;
+    padding: 5px;
+    font-size: 35px;
+    color: #444;
+    transition: all .2s;
+  }
+  
+  input.star:checked ~ label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+  }
+  
+  input.star-5:checked ~ label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+  }
+  
+  input.star-1:checked ~ label.star:before { color: #F62; }
+  
+  label.star:hover { transform: rotate(-15deg) scale(1.3); }
+  
+  label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+  }
+.button{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+.button:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.button:before,.button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.button:hover:before,.button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+  </style>
+  <script>
+  var questions_all;
+  var sub_type=[];
+  var sub_name=[];
+  <% for(var key in subjects_f) { %>
+	sub_type.push("<%= subjects_f[key][2] %>");
+	sub_name.push("<%= subjects_f[key][0] %>");
+  <% } %>
+  var name=<%- JSON.stringify(name); %>;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "feedbackForm/submore", false);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function() {
+      if(this.responseText){
+		console.log(this.responseText)
+		questions_all=eval(this.responseText);
+		console.log(questions_all)
+		}
+  };
+  xhr.send(JSON.stringify({subjects_f : <%- JSON.stringify(subjects_f); %>}));
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "feedbackForm/subqore", false);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({'qc':questions_all}));
+  </script>
+  <title></title>
+</head>
+<body>
+  <header class="cd-main-header js-cd-main-header">
+    <div class="cd-logo-wrapper">
+      <!--<a href="#0" class="cd-logo"><img src="assets/img/cd-logo.svg" alt="Logo"></a>-->
+    </div>
+    
+    <div class="cd js-cd-search">
+      <form>
+       <!-- <input class="reset" type="search" placeholder="Search...">-->
+      </form>
+    </div>
+  
+    <button class="reset cd-nav-trigger js-cd-nav-trigger" aria-label="Toggle menu"><span></span></button>
+  
+    <ul class="cd-nav__list js-cd-nav__list">
+     <!--<li class="cd-nav__item"><a href="#0">Tour</a></li>
+      <li class="cd-nav__item"><a href="#0">Support</a></li>-->
+      <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children">
+        <!--<a href="#0">
+          <img src="assets/img/cd-avatar.svg" alt="avatar">
+          <span>Account</span>
+        </a>-->
+    
+        <ul class="cd-nav__sub-list">
+         <!-- <li class="cd-nav__sub-item"><a href="#0">My Account</a></li>
+          <li class="cd-nav__sub-item"><a href="#0">Edit Account</a></li>
+          <li class="cd-nav__sub-item"><a href="#0">Logout</a></li>-->
+        </ul>
+      </li>
+    </ul>
+  </header> <!-- .cd-main-header -->
+  
+  <main class="cd-main-content">
+    <nav class="cd-side-nav js-cd-side-nav">
+      
+	  <ul class="cd-side__list js-cd-side__list" id="ques_no">
+		<li class="cd-side__label"><span style="color: red;">welcome</span></li>
+		<li class="cd-side__label"><span style="color: aquamarine;"><script type="text/javascript">document.write(name)</script></span></li>
+        <li class="cd-side__label"><span>Subjects</span></li>
+		<% for(var key in subjects_f) { %>
+		<li class="cd-side__item cd-side__item cd-side__item--overview js-cd-item">
+          <a href="" onclick="got(<%= key %>)" id="id<%= key %>" style="" title="<%= subjects_f[key][1] %>" class="<%= subjects_f[key][2] %>" ><%= subjects_f[key][0] %>&nbsp <span id="sub<%= key %>" class="ionicons ion-checkmark-circled" style="color:limegreen;opacity:0"></span></a></li>
+		<% } %>
+		
+      <li class="cd-side__item cd-side__item--has-children cd-side__item--notifications cd-side__item--selected js-cd-item--has-children">
+      </li>
+    
+      </ul>
+    
+    </nav>
+  
+    <!-- <div class="cd-content-wrapper">
+      <div class="text-component text-center">
+        <h1>Responsive Sidebar Navigation</h1>
+        <p>👈<a href="https://codyhouse.co/gem/responsive-sidebar-navigation">Article &amp; Download</a></p>
+      </div>
+    </div> .content-wrapper -->
+
+	<div style="position: relative;">
+	<div id="progress"></div>
+<div class="center container">
+  <div id="register row">
+
+    <div id="inputContainer" class="col-12 ip1">
+      <!--<input id="inputField" required autofocus />-->
+      <label id="inputLabel"></label>
+      <div id="inputProgress"></div>
+      <div class="cont col-12">
+        <div class="stars" id="stars1">
+          <form action=''>
+            <input class='star star-5' id='star-5-2' type='radio' name='star'/>
+            <label class='star star-5' for='star-5-2'></label>
+            <input class='star star-4' id='star-4-2' type='radio' name="star"/>
+            <label class='star star-4' for='star-4-2'></label>
+            <input class='star star-3' id='star-3-2' type='radio' name='star'/>
+            <label class='star star-3' for='star-3-2'></label>
+            <input class='star star-2' id='star-2-2' type='radio' name='star'/>
+            <label class='star star-2' for='star-2-2'></label>
+            <input class='star star-1' id='star-1-2' type='radio' name='star'/>
+            <label class='star star-1' for='star-1-2'></label>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-12 text-center">
+        <i id="progressButton" class="ion-android-arrow-forward next"></i>
+    </div>
+	<div class="col-12" style="padding:50;text-align:center" id="subnn">
+		
+    </div>
+    
+  </div>
+</div>
+<!-- partial -->
+  <script  src="script1.js"></script>
+	
+	</div>
+	
+  </main> <!-- .cd-main-content -->
+  <script src="assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+  <script src="assets/js/menu-aim.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

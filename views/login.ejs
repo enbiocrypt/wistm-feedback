@@ -1,0 +1,198 @@
+<html>
+<head>
+ <!-- Required meta tags always come first -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+<!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+<script src="jquery/dist/jquery.slim.min.js"></script>
+<script src="popper.js/dist/umd/popper.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+
+<style>
+body{
+background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+}
+.lc1{
+text-shadow:2px 3px 0px #898999;
+color:white;
+font-weight: 900;
+font-size: 350%;
+}
+
+.peach-gradient {
+    background: linear-gradient(40deg,#ffd86f,#fc6262)!important;
+}
+
+.dropdown-menu{
+min-width:0;
+width:100%;
+margin-top: 5px;
+}
+
+
+button{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+
+.lol{
+background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+
+.button:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.button:before,.button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.button:hover:before,.button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+.row-content {
+    margin:0px auto;
+    padding: 50px 0px 50px 0px;
+    min-height:300px;
+}
+
+.r1e{
+	margin:0px auto;
+    padding: 50px 0px 50px 0px;
+}
+
+.r2e{
+	margin:auto;
+    padding: 10px;
+}
+span{
+font-family: sans-serif;
+font-size: x-large;
+font-weight: bold;
+}
+table{
+text-align:right;
+margin:0 auto;
+}
+td{
+padding:10px;
+}
+input:valid {
+  color: green;
+}
+input:invalid {
+  color: red;
+}
+
+</style>
+<script>
+function romanize(num) {
+  var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},roman = '',i;
+  for ( i in lookup ) {
+    while ( num >= lookup[i] ) {
+      roman += i;
+      num -= lookup[i];
+    }
+  }
+  return roman;
+}
+var stream=<%- JSON.stringify(stream); %>;
+var year=<%- JSON.stringify(year); %>;
+var branch=<%- JSON.stringify(branch); %>;
+function val(){
+if(document.getElementById("prn").checkValidity() && document.getElementById("pan").checkValidity())
+document.getElementById("psub").innerHTML="<button class='button' aria-expanded='false' onclick='subm()'>SUBMIT</button>";
+else
+document.getElementById("psub").innerHTML="";
+}
+function subm(){
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "login", false);
+xhr.setRequestHeader('Content-Type', 'application/json');
+
+xhr.onreadystatechange = function() {
+      if(this.responseText=="correct")
+		window.location='/feedbackForm';
+	  else{
+		document.getElementById('prn').value="";
+		document.getElementById('pan').value="";
+		document.getElementById("psub").innerHTML="";
+		document.getElementById('oll').innerHTML=this.responseText;
+		document.getElementById('oll').style.opacity=1;
+	  }
+  };
+  
+xhr.send(JSON.stringify({regno: document.getElementById('prn').value, adhno: document.getElementById('pan').value}));
+}
+
+</script>
+</head>
+
+
+
+<body>
+<header class="jumbotron text-center r1e" style="background-color:transparent !important;">
+  <h1 class="lc1 col-12">Student Feedback System</h1>
+  <br>
+  <h3><script type="text/javascript">document.write("Stream: "+stream)</script></h3>
+  <h3><script type="text/javascript">document.write("Branch: "+branch)</script></h3>
+  <h3><script type="text/javascript">document.write("Year: "+romanize(year))</script></h3>
+</header>
+
+<div class="container text-center">
+	<h4 style="color:red;opacity:0" id="oll"></h4>
+	<table>
+	<tr>
+		<td>
+			<span>Registration Number: <input oninput="val()" id="prn" type="text" minlength="3" placeholder="Full Roll Number" required /></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+		<span>Adhaar Number: <input oninput="val()" id="pan" maxlength="12" type="text" placeholder="12-Digits" pattern="\d{12}" required /></span>
+		</td>
+	</tr>
+	</table>
+	<div  style="padding:30px" id="psub">
+	</div>
+</div>
+
+</body>
+
+</html>

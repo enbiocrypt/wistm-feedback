@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+	<script>
+      function subm(){
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "login", false);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+            if(this.responseText=="correct")
+      		window.location='/upinter';
+      	  else{
+      		document.getElementById('prn').value="";
+      		document.getElementById('pan').value="";
+      		document.getElementById("psub").innerHTML="";
+      		document.getElementById('oll').innerHTML=this.responseText;
+      		document.getElementById('oll').style.opacity=1;
+      	  }
+        };
+      xhr.send(JSON.stringify({userid: document.getElementById('prn').value, password: document.getElementById('pan').value}));
+      }
+	  function funD(){
+		document.getElementById("eng").checked=false
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/student/D", false);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(null);
+		document.getElementById('forms').style.display="show";
+	  }
+	  function funE(){
+		document.getElementById("dip").checked=false
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/student/E", false);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(null);
+		document.getElementById('forms').style.display="block";
+	  }
+	  function oper(){
+		var formData = new FormData();
+		formData.append("file", document.getElementById("fileid").files[0]);
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/subjects", false);
+		xhr.setRequestHeader('Content-Type',"multipart/form-data");
+		xhr.send(formData);
+	  }
+	  function optr(){
+		var formData = new FormData();
+		formData.append("file", document.getElementById("fileid1").files[0]);
+		var xhr = new XMLHttpRequest();
+		
+		xhr.open("POST", "/student", false);
+		//xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+		xhr.send(formData);
+	  }
+      </script>
+  </head>
+  <body>
+    <input type="radio" id="eng" name="Engineering" value="Engineering" onclick="funE()"> Engineering
+    <input type="radio" id="dip" name="Diplo" value="Diploma" onclick="funD()"> Diploma
+
+    <div id="forms" style="display:none;">
+		 <br/>
+         <input id="fileid" type="file" name="myFile" />
+         <input onclick="oper()" type="submit" value="Upload Subject file"/>
+		 <br/>
+		 <br/>
+		 <input id="fileid1" type="file" name="myFile" />
+         <input onclick="optr()" type="submit" value="Upload Student Detail file"/>
+    </div>
+
+  </body>
+</html>
