@@ -8,7 +8,7 @@ const client  = redis.createClient();
 const app = express();
 
 const hostname = 'localhost';
-const port = process.env.PORT || 3000;
+port = process.env.PORT || 3000;
 
 app.set('view engine','ejs');
 app.use(bodyParser.json());      
