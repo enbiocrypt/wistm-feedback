@@ -4,11 +4,15 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
-const client  = redis.createClient();
+const hostname = 'localhost';
+REDISCACHEHOSTNAME='enbiocrypt.redis.cache.windows.net'
+REDISCACHEKEY='pQANwbSPqEA0rHqOpDznzOhJeb9sqyzWbZLWo6W5oZc='
+port = process.env.PORT || 3000;
+
+client  = redis.createClient(6379, process.env.REDISCACHEHOSTNAME, 
+        {auth_pass: process.env.REDISCACHEKEY, tls: {servername: process.env.REDISCACHEHOSTNAME}});
 const app = express();
 
-const hostname = 'localhost';
-port = process.env.PORT || 3000;
 
 app.set('view engine','ejs');
 app.use(bodyParser.json());      
@@ -20,7 +24,7 @@ app.use(express.static(__dirname + '/views'));
 app.use(session({
     secret: 'ssshhhhh',
     // create new redis store.
-    store: new redisStore({ host: 'localhost', port: 6379, client: client, disableTTL: true}),
+    store: new redisStore({ host: REDISCACHEHOSTNAME, port: 6379, client: client, disableTTL: true}),
     saveUninitialized: false,
     resave: false
 }));
