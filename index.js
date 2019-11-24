@@ -5,12 +5,10 @@ const bodyParser = require('body-parser');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const hostname = 'localhost';
-REDISCACHEHOSTNAME='enbiocrypt.redis.cache.windows.net'
-REDISCACHEKEY='pQANwbSPqEA0rHqOpDznzOhJeb9sqyzWbZLWo6W5oZc='
 port = process.env.PORT || 3000;
 
-client  = redis.createClient(6379, process.env.REDISCACHEHOSTNAME, 
-        {auth_pass: process.env.REDISCACHEKEY, tls: {servername: process.env.REDISCACHEHOSTNAME}});
+client  = redis.createClient(6380, 'enbiocrypt.redis.cache.windows.net', 
+        {auth_pass: 'pQANwbSPqEA0rHqOpDznzOhJeb9sqyzWbZLWo6W5oZc=', tls: {servername: 'enbiocrypt.redis.cache.windows.net'}});
 const app = express();
 
 
@@ -22,9 +20,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/views'));
 
 app.use(session({
-    secret: 'ssshhhhh',
+    secret: 'ssshhhhhhhh',
     // create new redis store.
-    store: new redisStore({ host: REDISCACHEHOSTNAME, port: 6379, client: client, disableTTL: true}),
+    store: new redisStore({client: client, disableTTL: true}),
     saveUninitialized: false,
     resave: false
 }));
