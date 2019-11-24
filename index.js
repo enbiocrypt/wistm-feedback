@@ -51,12 +51,7 @@ app.get('/login',(req,res) => {
 
 app.post('/login',(req,res) => {
 	var mysql = require('mysql');
-	var con = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "",
-		database: "newfeedbackdb"
-		});
+	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 	var dict = {};
 	if(req.session.branchId){
 	con.connect(function(err) {
@@ -87,12 +82,7 @@ app.post('/login',(req,res) => {
 
 app.get('/stream', (req,res,next) => {
 	var mysql = require('mysql');
-	var con = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "",
-		database: "newfeedbackdb"
-		});
+	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 	var dict = {};
 	if(req.session.regId){
     res.render('feedbackForm',{'name':req.session.nameId,'subjects_f':req.session.subjects_f});
@@ -145,12 +135,7 @@ app.get('/stream/:streamId',(req,res) => {
 
 app.get('/feedbackForm',(req,res) => {
 	var mysql = require('mysql');
-	var con = mysql.createConnection({
-		host: "localhost",
-		user: "root",
-		password: "",
-		database: "newfeedbackdb"
-		});
+	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 	var dict = {};
 	if(req.session.subjects_f==undefined && req.session.regId){
 		console.log("feed1");
@@ -211,12 +196,7 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 			var dict=[[],[]];
 		function get_info(callback){
 			var mysql = require('mysql');
-			var con = mysql.createConnection({
-			host: "localhost",
-			user: "root",
-			password: "",
-			database: "newfeedbackdb"
-			});
+			var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 			req.session.subjects_f=req.body.subjects_f;
 			con.connect(function(err) {
 			if (err) throw err;
@@ -260,12 +240,7 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 		req.session.review=req.body.op;
 		console.log(req.session.review.S);
 		var mysql = require('mysql');
-		var con = mysql.createConnection({
-		host:'localhost',
-		user: 'root',
-		database:'newfeedbackdb',
-		password: ''
-		});
+		var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 
 		con.connect(err => {
 		if(err) throw err;
