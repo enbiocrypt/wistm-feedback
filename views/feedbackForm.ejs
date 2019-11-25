@@ -174,10 +174,19 @@
 	  <ul class="cd-side__list js-cd-side__list" id="ques_no">
 		<li class="cd-side__label"><span style="color: red;">welcome</span></li>
 		<li class="cd-side__label"><span style="color: aquamarine;"><script type="text/javascript">document.write(name)</script></span></li>
-        <li class="cd-side__label"><span>Subjects</span></li>
+        <li class="cd-side__label" style="background-color:#11b4b3"><span>Subjects</span></li>
 		<% for(var key in subjects_f) { %>
-		<li class="cd-side__item cd-side__item cd-side__item--overview js-cd-item">
-          <a href="" onclick="got(<%= key %>)" id="id<%= key %>" style="" title="<%= subjects_f[key][1] %>" class="<%= subjects_f[key][2] %>" ><%= subjects_f[key][0] %>&nbsp <span id="sub<%= key %>" class="ionicons ion-checkmark-circled" style="color:limegreen;opacity:0"></span></a></li>
+			<% if(subjects_f[key][2]!="L") { %>
+				<li class="cd-side__item cd-side__item cd-side__item--overview js-cd-item">
+				<a href="" onclick="got(<%= key %>)" id="id<%= key %>" style="" title="<%= subjects_f[key][1] %>" class="<%= subjects_f[key][2] %>" ><%= subjects_f[key][0] %>&nbsp <span id="sub<%= key %>" class="ionicons ion-checkmark-circled" style="color:limegreen;opacity:0"></span></a></li>
+			<% } %>
+		<% } %>
+		<li class="cd-side__label" style="background-color:#11b4b3"><span>Labs</span></li>
+		<% for(var key in subjects_f) { %>
+			<% if(subjects_f[key][2]=="L") { %>
+				<li class="cd-side__item cd-side__item cd-side__item--overview js-cd-item">
+				<a href="" onclick="got(<%= key %>)" id="id<%= key %>" style="" title="<%= subjects_f[key][1] %>" class="<%= subjects_f[key][2] %>" ><%= subjects_f[key][0] %>&nbsp <span id="sub<%= key %>" class="ionicons ion-checkmark-circled" style="color:limegreen;opacity:0"></span></a></li>
+			<% } %>
 		<% } %>
 		
       <li class="cd-side__item cd-side__item--has-children cd-side__item--notifications cd-side__item--selected js-cd-item--has-children">
