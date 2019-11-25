@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/static'));
 
 app.use(session({
     secret: 'ssshhhhhhhh',
@@ -27,6 +28,180 @@ app.use(session({
     resave: false
 }));
 
+app.get('/reviews',(req,res) => {
+	if(req.session.mainadmin){
+	var mysql = require('mysql');
+	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+    var MySql = require('sync-mysql');
+	var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+	type = req.query.type;
+    id = req.query.id;
+    console.log(id,type);
+    data = {}
+
+    if (type === 'S'){
+        quer = `SELECT avg(r.Q1), avg(r.Q2), avg(r.Q3), avg(r.Q4), avg(r.Q5), avg(r.Q6), avg(r.Q7), avg(r.Q8), avg(r.Q9), avg(r.Q10), avg(r.Q11), avg(r.Q12), avg(r.Q13), avg(r.Q14), avg(r.Q15), s.subname,f.name FROM sreviews r, faculty f, reviewsreport s where r.sid="${id}" and r.sid=s.sid and s.facultyid=f.id`;
+        data.questions = connection.query('select * from questions_subject');
+    }
+    else if(type === 'L'){
+        quer = `SELECT avg(r.Q1), avg(r.Q2), avg(r.Q3), avg(r.Q4), avg(r.Q5), avg(r.Q6), avg(r.Q7), avg(r.Q8), avg(r.Q9), avg(r.Q10), s.subname,f.name FROM lreviews r, faculty f, reviewsreport s where r.sid="${id}" and r.sid=s.sid and s.facultyid=f.id`;
+        data.questions = connection.query('select * from questions_lab');
+
+    }
+
+    console.log(data);
+    
+    con.query(quer, (err, result, fields) => {
+        values = Object.values(result[0]);
+        console.log(result);
+        data.name = result[0].name;
+        data.subname = result[0].subname;
+        if (values[0]){
+            
+            sum = values.slice(0,-2).reduce((a,b) => a+b, 0)
+            average = (sum/values.slice(0,-2).length).toFixed(1);
+            data.average = average;
+            console.log('average: ', average, '/5');
+            
+            values = values.slice(0,-2).map(x => parseFloat(x.toFixed(1)))
+            data.values = values;
+            
+            console.log(data);
+            
+            res.render('individualReview',{data:data});
+        }
+        else {
+            res.send(`subject ${req.query.id} not exist`);
+        }
+
+        
+    });
+	}else{
+		res.sendFile(__dirname+'/static/admin_main_login.html');
+	}
+	
+    
+});
+
+app.get('/ajax/series', function(request, response) {
+	if(request.session.mainadmin){
+	var MySql = require('sync-mysql');
+	var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+	
+    quer = ' select a.branch as name, name as bname, avg(average) as y  from reviewsreport a, branches b where a.branch=b.branch group by (a.branch)';
+
+    var branches = connection.query(quer);
+
+    branches.forEach(x => {
+        x.bartitle = x.name;
+        x.drilldown = x.name;
+        x.y =  parseFloat(x.y.toFixed(1));
+        x.description = 'Branch';
+
+    })
+    var sections = []
+    var sectionslist = []
+    branches.forEach(x => {
+        k = {
+            'id':x.name,
+
+        }
+        quer = `select secid as name,avg(average) as y, year, section from reviewsreport where branch='${x.name}' group by (secid)`;
+        var ress = connection.query(quer);
+        ress.forEach(x => {
+            x.y =  parseFloat(x.y.toFixed(1));
+            x.description = "Section";
+            x.bartitle = `${x.name.slice(0,-3)} year ${x.year}`;
+            if (x.section >1){
+                x.bartitle= x.bartitle+`section ${x.section}`;
+            }
+            
+            x.drilldown = x.name;
+        })
+        k.data = ress;
+        sections.push(k);
+        
+        ress.forEach(x => {
+            sectionslist.push(x.name);
+        })
+    });
+
+    subjects = []
+
+    sectionslist.forEach(x => {
+        k = {'id':x}
+        quer = `SELECT SID AS name, AVERAGE as y, type, subname FROM reviewsreport WHERE SECID="${x}"`;
+        var ress = connection.query(quer);
+        ress.forEach(x => {
+            x.y =  parseFloat(x.y.toFixed(1));
+            x.description = "Subject";
+            x.bartitle = x.subname;
+            x.link = `/reviews?id=${x.name}&type=${x.type}`;
+            x.name = x.bartitle;
+        })
+        k.data = ress;
+        subjects.push(k);
+    });
+
+
+    output = {}
+    output.data = branches;
+    output.series = sections.concat(subjects);
+    
+    response.json(output);
+    //console.log(output);
+}
+else{
+res.sendFile(__dirname+'/static/admin_main_login.html');
+}
+}
+
+);
+
+app.get('/main_admin_panel',(req,res) => {
+	if(req.session.mainadmin){
+	res.render('review_analysis');
+	}
+	else{
+	res.sendFile(__dirname+'/static/admin_main_login.html');
+	}
+});
+
+app.get('/main_admin_login',(req,res) => {
+	if(req.session.mainadmin){
+		res.render('review_analysis');
+	}
+	else{
+	res.sendFile(__dirname+'/static/admin_main_login.html');
+	}
+});
+
+app.post('/main_admin_login', (req,res) => {
+  if(req.session.mainadmin){
+  res.render('review_analysis');}
+  else{
+  userid = req.body.userid
+  password = req.body.password
+  var mysql = require('mysql');
+  var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+    con.connect(function(err) {
+    if (err) throw err;
+    con.query(`select userid FROM mainadmin WHERE userid="${userid}" AND password="${password}"`, function (err, result, fields) {
+      if (err) throw err;
+    console.log(result,result.length)
+    if(result.length!=0)
+    {
+      req.session.mainadmin=result[0].userid;
+      res.end("correct");
+    }
+    else{
+      res.end("Wrong Credentials!! Please Re-Enter");
+    }
+    });
+    con.end();
+    });
+  }
+});
 
 app.get('/',(req,res) => {
     let sess = req.session;

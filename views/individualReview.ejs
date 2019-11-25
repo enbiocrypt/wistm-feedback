@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Individual Report</title>
+    <link rel="stylesheet" href="/master.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Blinker&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <header>
+      <h1>Individual subject report</h1>
+      <div class="faculty-overall">
+        <div class="faculty-details">
+          <table>
+            <tr>
+              <td><b>Name :</b></td>
+              <td><%= data.name %></td>
+            </tr>
+            <tr>
+              <td><b>Subject : </b></td>
+              <td><%= data.subname %></td>
+            </tr>
+          </table>
+          
+        </div>
+        <div class="faculty-score">
+          <span><%= data.average %>/5</span>
+        </div>
+      </div>
+    </header>
+    <main>
+      <h2>aggregate results of each question</h2>
+      <div class="questions-list">
+        <% for(var i=0;i<data.values.length;i++) {%>
+            <div class="question-item">
+                <div class="question">
+                  <span><b>Q.</b> <%= data.questions[i].question %></span>
+                </div>
+                <div class="score">
+                  <span><%= data.values[i] %></span>
+                </div>
+              </div>
+        <% } %>
+
+
+      </div>
+    </main>
+    <footer>
+      <button id="printer" onclick="myFunction()">Print 🖶</button>
+
+      <script>
+      function myFunction() {
+        window.print();
+      }
+      </script>
+
+    </footer>
+  </body>
+</html>

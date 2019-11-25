@@ -1,0 +1,27 @@
+body {
+  font-family: 'Red Hat Display', sans-serif;
+  
+}
+
+
+header h1 {
+  text-align: center;
+  border-bottom: 3px solid #bfa8a8;
+  margin-top: 20px;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#container {
+  background-image: url('logo.png');
+  background-repeat: no-repeat;
+  background-size: 400px;
+  background-position: center; 
+
+  min-width: 310px;
+    margin: 0px auto;
+    overflow: hidden;
+    margin-right: 10px;
+    height: calc(100vh - 75px);
+}
