@@ -40,7 +40,6 @@ xhr.onreadystatechange = function() {
 	}
 	sub_branch.forEach(function m20(item, index)
 	{
-		console.log(item,index);
 		if(item)
 		{
 			if(document.getElementById("id"+index).className=='S'){

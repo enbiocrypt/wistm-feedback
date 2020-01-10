@@ -5,33 +5,23 @@ const app = express()
 const multer = require('multer');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
-const client  = redis.createClient();
-
+client  = redis.createClient(6380, 'enbiocrypt.redis.cache.windows.net', 
+        {auth_pass: 'pQANwbSPqEA0rHqOpDznzOhJeb9sqyzWbZLWo6W5oZc=', tls: {servername: 'enbiocrypt.redis.cache.windows.net'}});
 app.use(session({
-  secret: 'ssshhhhh',
-  // create new redis store.
-  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl : 260}),
-  saveUninitialized: false,
-  resave: false
+    secret: 'ssshhhhhhhh',
+    // create new redis store.
+    store: new redisStore({client: client, disableTTL: true}),
+    saveUninitialized: false,
+    resave: false
 }));
 app.use(bodyParser.json());      
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/node_modules'));
 var MySql = require('sync-mysql');
-var connection = new MySql({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'newfeedbackdb'
-});
+var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 
 var mysql = require('mysql');
-var con = mysql.createConnection({
-    host:'localhost',
-    user: 'root',
-    database:'newfeedbackdb',
-    password: ''
-});
+var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 
 //fs = require('fs-extra')
 app.use(bodyParser.urlencoded({extended: true}))
@@ -145,9 +135,10 @@ app.post('/subjects',upload.single("file"),(req,res) => {
   if(req.session.branch && req.session.stream){
     branch = req.session.branch;
     stream = req.session.stream;
-  var quer=`delete from REVIEWSREPORT WHERE STREAM=${stream} AND BRANCH=${branch}`
+  
+  var quer=`delete from REVIEWSREPORT WHERE STREAM="${stream}" AND BRANCH="${branch}"`
   //CREATE TABLE ECSE (YEAR INT, SECTION INT, REGNO INT, NAME VARCHAR(255), ADHAAR INT);
-  const file = req.paramaters.file;
+  const file = req.file;
   if (!file) {
     return res.end("Please Upload Correct File!!");
   }

@@ -3,7 +3,9 @@ body {
   max-width: 800px;
   margin: auto;
 }
-
+table{
+  width: 100%;
+}
 #printer {
   font-size: 1.5rem;
   align-items: center;
@@ -32,15 +34,39 @@ header {
   padding: 5px;
 }
 
+#scores {
+  border-collapse: collapse;
+  width: 100%;
+}
+#FinalScore {
+  text-align: right;
+}
+#scores td, #scores th {
+  border: 1px solid #ff9a00;
+  padding: 3px;
+}
+
+#scores tr:nth-child(even){background-color: #f2f2f2;}
+
+#scores tr:hover {background-color: #ddd;}
+
+#scores th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #ff9a00;
+  color: white;
+}
+
 h1 {
   text-align: center;
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   text-transform: uppercase;
 }
 h2 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: bold;
 }
 
@@ -54,7 +80,7 @@ h2 {
 }
 .faculty-details {
   /*background-color: yellow;*/
-  font-size: 2rem;
+  font-size: 1.2rem;
   width: 60%;
   padding: 10px;
 }
@@ -69,7 +95,7 @@ h2 {
   /*background-color: green;*/
   width: 40%;
   text-align: center;
-  font-size: 5rem;
+  font-size: 3rem;
   border-left:10px solid #3a9aef;
 
 }

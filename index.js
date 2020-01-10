@@ -28,7 +28,7 @@ app.use(session({
     resave: false
 }));
 
-app.get('/reviews',(req,res) => {
+/*app.get('/reviews',(req,res) => {
 	if(req.session.mainadmin){
 	var mysql = require('mysql');
 	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
@@ -81,7 +81,7 @@ app.get('/reviews',(req,res) => {
 	}
 	
     
-});
+});*/
 
 app.get('/ajax/series', function(request, response) {
 	if(request.session.mainadmin){
@@ -361,6 +361,116 @@ app.get('/feedbackForm/:feedsId', (req,res,next) => {
     
 });
 
+app.get('/reviews',(req,res) => {
+	if(req.session.mainadmin){
+	var mysql = require('mysql');
+	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+    var MySql = require('sync-mysql');
+	var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+	type = req.query.type;
+    id = req.query.id;
+    console.log(id,type);
+    summary = []
+	data = {}
+
+	eachSolution = {
+		1:0,
+		2:0,
+		3:0,
+		4:0,
+		5:0
+	}
+    if (type === 'S'){
+
+		quer = `SELECT r.Q1, r.Q2, r.Q3, r.Q4, r.Q5, r.Q6, r.Q7, r.Q8, r.Q9, r.Q10, r.Q11, r.Q12, r.Q13, r.Q14, r.Q15 FROM sreviews r where r.sid="${id}"`;
+		quer2 = `SELECT avg(r.Q1), avg(r.Q2), avg(r.Q3), avg(r.Q4), avg(r.Q5), avg(r.Q6), avg(r.Q7), avg(r.Q8), avg(r.Q9), avg(r.Q10), avg(r.Q11), avg(r.Q12), avg(r.Q13), avg(r.Q14), avg(r.Q15), s.subname,f.name, s.branch, s.stream, s.year FROM sreviews r, faculty f, reviewsreport s where r.sid="${id}" and r.sid=s.sid and s.facultyid=f.id`;
+		data.questions = connection.query('select * from questions_subject');
+
+		for(i=0;i<15;i++){
+			summary.push({
+				1:0,
+				2:0,
+				3:0,
+				4:0,
+				5:0
+			})
+		}
+    }
+    else if(type === 'L'){
+        quer = `SELECT r.Q1, r.Q2, r.Q3, r.Q4, r.Q5, r.Q6, r.Q7, r.Q8, r.Q9, r.Q10 FROM lreviews r where r.sid="${id}"`;
+		quer2 = `SELECT avg(r.Q1), avg(r.Q2), avg(r.Q3), avg(r.Q4), avg(r.Q5), avg(r.Q6), avg(r.Q7), avg(r.Q8), avg(r.Q9), avg(r.Q10), s.subname,f.name, s.branch, s.stream, s.year FROM lreviews r, faculty f, reviewsreport s where r.sid="${id}" and r.sid=s.sid and s.facultyid=f.id`;
+		data.questions = connection.query('select * from questions_lab');
+
+		for(i=0;i<10;i++){
+			summary.push({
+				1:0,
+				2:0,
+				3:0,
+				4:0,
+				5:0
+			})
+		}
+    }
+
+    
+    con.query(quer, (err, result, fields) => {
+		values = Object.values(result[0]);
+		votes = result.length
+		result.forEach((x) => {
+			stars = Object.values(x)
+			for(i=0;i<stars.length;i++){
+				summary[i][stars[i]]+=1
+			}
+		})
+		summaryArray = []
+		b = []
+		summary.forEach((x) => {
+			summaryArray.push(Object.values(x))
+		})
+		for (i=0;i<summaryArray.length;i++){
+			b.push(summaryArray[i].map( x => parseFloat((x/result.length)*100).toFixed(1)))
+		}
+
+		con.query(quer2, (err, result, fields) => {
+			values = Object.values(result[0]);
+			console.log(result);
+			data.name = result[0].name;
+			data.subname = result[0].subname;
+			data.year = result[0].year;
+			data.branch = result[0].branch;
+			if (result[0].stream === "E"){
+				data.stream = "Engineering"
+			}
+			else if (result[0].stream == "D") {
+				data.stream = "Diploma"
+			}
+			if (values[0]){
+				
+				sum = values.slice(0,-5).reduce((a,b) => a+b, 0)
+				average = (sum/values.slice(0,-5).length).toFixed(1);
+				data.average = (average/5)*100;
+				console.log('average: ', average, '%');
+				
+				values = values.slice(0,-5).map(x => parseFloat((x/5)*100).toFixed(1))
+				data.values = values;
+				
+				console.log(data);
+				console.log(b);
+				res.render('individualReviewFull',{data:data,starCount:b,votes:votes});
+			}
+	
+			
+		});
+
+	})
+
+	}else{
+		res.sendFile(__dirname+'/static/admin_main_login.html');
+	}
+	
+    
+});
+
 app.post('/feedbackForm/:feedsId',(req,res) => { 
 	if(req.params.feedsId=="submore"){
 		if(req.session.subjects_f){
@@ -369,20 +479,43 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 		else{
 			console.log(req.body);
 			var dict=[[],[]];
+			var tmpsub={};
+			var tmplab={};
 		function get_info(callback){
 			var mysql = require('mysql');
 			var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 			req.session.subjects_f=req.body.subjects_f;
 			con.connect(function(err) {
 			if (err) throw err;
-			con.query('SELECT a.question as subjects, b.question as lab FROM questions_subject a LEFT JOIN questions_lab b ON a.sno=b.sno', function (err, result, fields) {
+			//con.query('SELECT a.question as subjects, b.question as lab FROM questions_subject a LEFT JOIN questions_lab b ON a.sno=b.sno', function (err, result, fields) {
+			con.query('SELECT a.question as subjects, b.question as lab, a.category as sub_cat, b.category as lab_cat FROM questions_subject a LEFT JOIN questions_lab b ON a.sno=b.sno', function (err, result, fields) {
 			if (err) throw err;
-			for(var i=0;i<result.length;i++){
+			/**for(var i=0;i<result.length;i++){
 				if(result[i].subjects)
 					dict[0].push(result[i].subjects);
 				if(result[i].lab)
 					dict[1].push(result[i].lab);
+			}**/
+			for(var i=0;i<result.length;i++){
+				if(result[i].subjects){
+					if(!tmpsub[result[i].sub_cat]){
+						tmpsub[result[i].sub_cat]=[result[i].subjects];
+					}
+					else{
+						tmpsub[result[i].sub_cat].push(result[i].subjects);
+					}
+				}
+				if(result[i].lab){
+					if(!tmplab[result[i].lab_cat]){
+						tmplab[result[i].lab_cat]=[result[i].lab];
+					}
+					else{
+						tmplab[result[i].lab_cat].push(result[i].lab);
+					}
+				}
 			}
+			dict[0]=tmpsub;
+			dict[1]=tmplab;
 			return callback(dict);
 				});
 				con.end();

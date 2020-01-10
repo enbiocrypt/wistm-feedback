@@ -167,7 +167,7 @@ xhr.send(JSON.stringify({regno: document.getElementById('prn').value, adhno: doc
 
 <body>
 <header class="jumbotron text-center r1e" style="background-color:transparent !important;">
-  <h1 class="lc1 col-12">Student Feedback System</h1>
+  <h1 class="lc1 col-12">WISTM Feedback</h1>
   <br>
   <h3><script type="text/javascript">document.write("Stream: "+stream)</script></h3>
   <h3><script type="text/javascript">document.write("Branch: "+branch)</script></h3>
@@ -185,10 +185,11 @@ xhr.send(JSON.stringify({regno: document.getElementById('prn').value, adhno: doc
 	
 	<tr>
 		<td>
-		<span>Adhaar Number: <input oninput="val()" id="pan" maxlength="12" type="text" placeholder="12-Digits" pattern="\d{12}" required /></span>
+		<span>Aadhaar Number: <input oninput="val()" id="pan" maxlength="12" type="text" placeholder="12-Digits" pattern="\d{12}" required /></span>
 		</td>
 	</tr>
 	</table>
+		<h4 style="color:red">NOTE: These details will not be stored anywhere and is for VERIFICATION PURPOSE only</h4>
 	<div  style="padding:30px" id="psub">
 	</div>
 </div>

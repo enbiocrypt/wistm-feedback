@@ -4,7 +4,6 @@ var sub_branch=[];
 var index_po=0;
 var subb;
 var xhr = new XMLHttpRequest();
-var start=0;
 xhr.overrideMimeType("application/json");
 xhr.onreadystatechange = function() {
    if (xhr.readyState == XMLHttpRequest.DONE) {
@@ -35,26 +34,19 @@ xhr.onreadystatechange = function() {
    sub_branch=JSON.parse(xhr.responseText).sub;
    if(sub_branch[index_po]!=undefined){
 	submission=sub_branch[index_po];
-	//if(submission[0]!=undefined)
-	//	document.getElementById('star-'+submission[0]+'-2').checked=true;
+	if(submission[0]!=undefined)
+		document.getElementById('star-'+submission[0]+'-2').checked=true;
 	}
 	sub_branch.forEach(function m20(item, index)
 	{
-		console.log(item,index);
 		if(item)
 		{
 			if(document.getElementById("id"+index).className=='S'){
-				var temp=0;
-				for(var key in questions_all[0])
-					temp+=questions_all[0][key].length
-				if(item.length==temp)
+				if(item.length==questions_all[0].length)
 					eval("sub"+index).style.opacity=1;
 			}
 			else{
-				var temp=0;
-				for(var key in questions_all[1])
-					temp+=questions_all[1][key].length
-				if(item.length==temp)
+				if(item.length==questions_all[1].length)
 					eval("sub"+index).style.opacity=1;
 			}
 			
@@ -68,12 +60,7 @@ xhr.send(null);
 function submit_f(){
 	var ques_no_S = document.getElementsByClassName('S').length;
 	var ques_no_L = document.getElementsByClassName('L').length;
-	var temp1=0,temp2=0;
-	for(var key in questions_all[0])
-		temp1+=questions_all[0][key].length
-	for(var key in questions_all[1])
-		temp2+=questions_all[1][key].length
-	var sum_All= (temp1*ques_no_S) + (temp2*ques_no_L);
+	var sum_All= (questions_all[0].length*ques_no_S) + (questions_all[1].length*ques_no_L);
 	//var ques_no = document.getElementById("ques_no").childElementCount - 4;
 	var sum=0;
 	for(var i in sub_branch)
@@ -150,6 +137,7 @@ function got(i){
   // init
   // --------------
   var position = 0
+  
 
   putQuestion()
   submit_f();
@@ -164,12 +152,10 @@ function got(i){
   // --------------
 
   function check(){
-	  console.log(position)
-	  for(var i=0;i<questions[position].question.length;i++)
-	  if(document.getElementById('star-1-2-'+(start+i)).checked){
-		  submission[start+i]=1;
+	  if(document.getElementById('star-1-2').checked){
+		  submission[position]=1;
 		  sub_branch[index_po]=submission;
-		document.getElementById('star-1-2-'+(start+i)).checked=false;
+		document.getElementById('star-1-2').checked=false;
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "feedbackForm", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -177,10 +163,10 @@ function got(i){
 		sub: sub_branch
 		}));
 	  }
-	  else if(document.getElementById('star-2-2'+'-'+(start+i)).checked){
-		  submission[start+i]=2;
+	  else if(document.getElementById('star-2-2').checked){
+		  submission[position]=2;
 		  sub_branch[index_po]=submission;
-		document.getElementById('star-2-2'+'-'+(start+i)).checked=false;
+		document.getElementById('star-2-2').checked=false;
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "feedbackForm", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -188,10 +174,10 @@ function got(i){
 		sub: sub_branch
 		}));
 	  }
-	  else if(document.getElementById('star-3-2'+'-'+(start+i)).checked){
-		  submission[start+i]=3;
+	  else if(document.getElementById('star-3-2').checked){
+		  submission[position]=3;
 		  sub_branch[index_po]=submission;
-		document.getElementById('star-3-2'+'-'+(start+i)).checked=false;
+		document.getElementById('star-3-2').checked=false;
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "feedbackForm", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -199,10 +185,10 @@ function got(i){
 		sub: sub_branch
 		}));
 	  }
-	  else if(document.getElementById('star-4-2'+'-'+(start+i)).checked){
-		  submission[start+i]=4;
+	  else if(document.getElementById('star-4-2').checked){
+		  submission[position]=4;
 		  sub_branch[index_po]=submission;
-		document.getElementById('star-4-2'+'-'+(start+i)).checked=false;
+		document.getElementById('star-4-2').checked=false;
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "feedbackForm", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -210,10 +196,10 @@ function got(i){
 		sub: sub_branch
 		}));
 	  }
-	  else if(document.getElementById('star-5-2'+'-'+(start+i)).checked){
-		  submission[start+i]=5;
+	  else if(document.getElementById('star-5-2').checked){
+		  submission[position]=5;
 		  sub_branch[index_po]=submission;
-		document.getElementById('star-5-2'+'-'+(start+i)).checked=false;
+		document.getElementById('star-5-2').checked=false;
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "feedbackForm", true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -223,51 +209,14 @@ function got(i){
 	  }
 	  else{
 		  console.log(submission,position);
-		  return false;
-		  }
+		  return false;}
 	  console.log(submission,position);
 	  return true;
 	  
   }
   // load the next question
   function putQuestion() {
-	  var temp=''
-	  for(var i=0;i<questions[position].question.length;i++)
-		temp+=`<br><div id="inputContainer" class="col-12 ip1">
-      <label id="inputLabel">${questions[position].question[i]}</label>
-      <div id="inputProgress"></div>
-      <div class="cont col-12">
-        <div class="stars" id="stars1">
-          <form action=''>
-            <input class='star star-5' id='star-5-2-${start+i}' type='radio' name='star'/>
-            <label class='star star-5' for='star-5-2-${start+i}'></label>
-            <input class='star star-4' id='star-4-2-${start+i}' type='radio' name="star"/>
-            <label class='star star-4' for='star-4-2-${start+i}'></label>
-            <input class='star star-3' id='star-3-2-${start+i}' type='radio' name='star'/>
-            <label class='star star-3' for='star-3-2-${start+i}'></label>
-            <input class='star star-2' id='star-2-2-${start+i}' type='radio' name='star'/>
-            <label class='star star-2' for='star-2-2-${start+i}'></label>
-            <input class='star star-1' id='star-1-2-${start+i}' type='radio' name='star'/>
-            <label class='star star-1' for='star-1-2-${start+i}'></label>
-          </form>
-        </div>
-      </div>
-    </div>`
-		/**temp+=`<br><div class="col-12 text-center">
-				<i id="progressButton" class="ion-android-arrow-forward next"></i>
-				</div>
-				<div class="col-12" style="padding:50;text-align:center" id="subnn">
-				</div>`**/
-		  
-	  //inputLabel.innerHTML = questions[position].question;
-	
-	document.getElementsByClassName("poplice")[0].innerHTML = temp;
-	progress.style.height=document.getElementById("doleo").offsetHeight
-	for(var i=0;i<questions[position].question.length;i++)
-		if(submission[start+i]!=undefined){
-			document.getElementById('star-'+submission[start+i]+'-2-'+(start+i)).checked=true;
-		}
-	  console.log(position)
+    inputLabel.innerHTML = questions[position].question;
 	//if(submission[position]!=undefined){
 	//	document.getElementById('star-'+submission[0]+'-2').checked=true;
 	//}
@@ -284,12 +233,10 @@ function got(i){
     //register.className = 'close'
     
     // add the h1 at the end with the welcome text
-    //inputContainer.style.opacity = 1
+    inputContainer.style.opacity = 1
     eval(subb).style.opacity=1
-	document.getElementsByClassName("poplice")[0].innerHTML=`<br><div id="inputContainer" class="col-12 ip1">
-      <label id="inputLabel">Thanks For Your Submission....</label></div>`
-	  progress.style.height=document.getElementById("doleo").offsetHeight
-	//document.getElementById('stars1').innerHTML="";
+	inputLabel.innerHTML='Thanks for your Submission..'
+	document.getElementById('stars1').innerHTML="";
 	submit_f()
     //document.getElementById('sub1').style.display="none"
     progressButton.style.display="none"
@@ -325,17 +272,18 @@ function got(i){
   }
 
   function validate1(){
-	  console.log(position);
 	if(check()){  
 		if(position<questions.length){
 		ok(function() {
       
       // set the progress of the background
-	  start+=questions[position].question.length
       progress.style.width = ++position * 100 / questions.length + '%'
 
       // if there is a new question, hide current and load next
       if (questions[position]){
+		  if(submission[position]!=undefined){
+			document.getElementById('star-'+submission[position]+'-2').checked=true;
+			}
 		  hideCurrent(putQuestion)
 		  }
       else hideCurrent(done)
@@ -353,16 +301,16 @@ function got(i){
   // --------------
 
   function hideCurrent(callback) {
-    //inputContainer.style.opacity = 0
-    //inputProgress.style.transition = 'none'
-    //inputProgress.style.width = 0
+    inputContainer.style.opacity = 0
+    inputProgress.style.transition = 'none'
+    inputProgress.style.width = 0
     setTimeout(callback, wTime)
   }
 
   function showCurrent(callback) {
-    //inputContainer.style.opacity = 1
-    //inputProgress.style.transition = ''
-    //inputProgress.style.width = '100%'
+    inputContainer.style.opacity = 1
+    inputProgress.style.transition = ''
+    inputProgress.style.width = '100%'
     setTimeout(callback, wTime)
   }
 

@@ -1,0 +1,59 @@
+STREAM,YEAR,SECTION,SUBJECT CODE,SUBJECT NAME,FACULTY ID,SUBJECT OR LAB
+E,4,1,AI,Artificial Inteligence,1,S
+E,4,1,BDA,BigData Analytics,2,S
+E,4,1,CSDF,Cyber Security,3,S
+E,4,1,ES,Embedded systems,4,S
+E,4,1,PEM,Principles of Economics,5,S
+E,4,1,BDA,BigData Analytics Lab,2,L
+E,4,1,KE,Knowledge Engg Lab,3,L
+E,4,1,IOT,Internet of things Lab,5,L
+E,3,1,CN,Computer Networks,6,S
+E,3,1,WT,Web Technologies,2,S
+E,3,1,FLAT,Automata Theory,3,S
+E,3,1,DBMS,Database Management,2,S
+E,3,1,ADJ,Advanced Java,5,S
+E,3,1,DBMS,DBMS Lab,2,L
+E,3,1,DCN,Networks Lab,6,L
+E,3,1,SS,Soft Skills Lab,7,L
+E,2,1,DS,Data Structures,8,S
+E,2,1,E1,Elements of Electronics Engg,9,S
+E,2,1,DMS,Discrete Mathematics,10,S
+E,2,1,OOPS,Object Oriented Programming,4,S
+E,2,1,EEE,Elements Of Electrical Engg,11,S
+E,2,1,DLD,Digital Logic Design,12,S
+E,2,1,DS,Data Structures Lab,8,L
+E,2,1,OOPS,OOPs Lab,4,L
+E,1,1,ENG,English,7,S
+E,1,1,M1,Mathematics 1,10,S
+E,1,1,M2,Mathematics 2,13,S
+E,1,1,CHE,Chemistry,14,S
+E,1,1,CPNM,C Programming,15,S
+E,1,1,HST,History of Science and Technology,16,S
+E,1,1,CHE,Chemistry Lab,14,L
+E,1,1,CPNM,CPNM Lab,4,L
+E,4,2,PR,Project,1,L
+E,3,2,DWDM,Datawarehouse and Datamning,4,S
+E,3,2,OOSE,Object Oriented Software Engineering,6,S
+E,3,2,DAA,Design And Analysis Of Algorithms,16,S
+E,3,2,DOS,Distributed Operating Systems,15,S
+E,3,2,CD,Compiler Design,2,S
+E,3,2,CNS,Cryptography And Network Security,5,S
+E,3,2,SE,Software Engineering MiniProject Lab,6,L
+E,3,2,WT,Web Technologies Lab,2,L
+E,2,2,OS,Operating Systems,15,S
+E,2,2,CO,Computer Organizaton,2,S
+E,2,2,MP,Microprocessors,9,S
+E,2,2,DC,Data Communications,4,S
+E,2,2,ADS,Advance Data Structure,5,S
+E,2,2,OR,Operations Research,3,S
+E,2,2,ES,Enironmental Studies,3,S
+E,2,2,OS,operating Systems Lab,15,L
+E,2,2,DEMP,Digital Electronics and Microprocessors lab,9,L
+E,1,2,M3,Mathematics 3,1,S
+E,1,2,PY,Physics,2,S
+E,1,2,PSQT,Probability Statistics And Queuing Theory,3,S
+E,1,2,EG,Engineering Graphics,4,S
+E,1,2,PEMV,Ethics And Moral Values,5,S
+E,1,2,PY,Physics Lab,6,L
+E,1,2,WS,Workshop,8,L
+E,1,2,EL,English Language Lab,7,L

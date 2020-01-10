@@ -133,11 +133,6 @@
   xhr.open("POST", "feedbackForm/subqore", false);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({'qc':questions_all}));
-	function resize() {
-	progress.style.height=document.getElementById("doleo").offsetHeight
-	}
-
-	window.onresize = resize;
   </script>
   <title></title>
 </head>
@@ -208,12 +203,13 @@
       </div>
     </div> .content-wrapper -->
 
-	<div style="position: relative;" id="doleo">
+	<div style="position: relative;">
 	<div id="progress"></div>
-<div class="center container" style="padding-top:15;padding-bottom:15">
-  <div id="register row" class="poplice" style="text-align:center">
-	<!--
+<div class="center container">
+  <div id="register row">
+
     <div id="inputContainer" class="col-12 ip1">
+      <!--<input id="inputField" required autofocus />-->
       <label id="inputLabel"></label>
       <div id="inputProgress"></div>
       <div class="cont col-12">
@@ -239,15 +235,9 @@
     </div>
 	<div class="col-12" style="padding:50;text-align:center" id="subnn">
 		
-    </div>-->
+    </div>
     
   </div>
-  <div class="col-12 text-center">
-        <i id="progressButton" class="ion-android-arrow-forward next"></i>
-    </div>
-	<div class="col-12" style="padding:50;text-align:center" id="subnn">
-		
-    </div>
 </div>
 <!-- partial -->
   <script  src="script1.js"></script>

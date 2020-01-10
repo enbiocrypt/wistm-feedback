@@ -20,8 +20,9 @@ h1 {
 }
 
 .center {
-  height: 100vh;
-  display: flex;
+  /*height: 100vh;
+  display: flex;*/
+  overflow-y:auto;
   justify-content: center;
   align-items: center;
 }

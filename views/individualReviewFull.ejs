@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Individual Report</title>
+    <link rel="stylesheet" href="/master.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Blinker&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <header>
+      <h1>Individual subject report</h1>
+      <table>
+        <tr>
+          <td><b>Course:</b></td>
+          <td><%= data.stream %></td>
+          <td><b>Branch:</b></td>
+          <td><%= data.branch %></td>
+          <td><b>Year:</b></td>
+          <td><%= data.year %></td>
+        </tr>
+        <tr>
+          <td><b>Faculty:</b></td>
+          <td><%= data.name %></td>
+          <td><b>Subject:</b></td>
+          <td><%= data.subname %></td>
+          <td><b>Total votes:</b></td>
+          <td><%= votes %></td>
+        </tr>
+      </table>
+
+    </header>
+    <main>
+      <h2>aggregate results of each question</h2>
+
+      <table id="scores">
+        <tr>
+        <th>Q.No</th>
+        <th>Question</th>
+        <th>Poor</th>
+        <th>Below Average</th>
+        <th>Average</th>
+        <th>Good</th>
+        <th>Very Good</th>
+        <th>Total(%)</th>
+        </tr>
+        <% for(var i=0;i<data.values.length;i++) {%>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%= data.questions[i].question %></td>
+            <% for(var j=0;j<starCount[0].length;j++) {%>
+              <td><%= starCount[i][j] %>%</td>
+            <% } %>
+            <td><%= data.values[i] %>%</td>
+          </tr>
+      <% } %>
+
+      </table>
+      
+
+
+      <span id="FinalScore"><b>Consolidated score: </b><%= data.average %></span>
+    </main>
+    <footer>
+      <button id="printer" onclick="myFunction()">Print 🖶</button>
+
+      <script>
+      function myFunction() {
+        window.print();
+      }
+      </script>
+
+    </footer>
+  </body>
+</html>
