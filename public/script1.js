@@ -82,7 +82,7 @@ function submit_f(){
 	
 	if(sum_All == sum){
 	document.getElementsByClassName("poplice")[0].innerHTML=`<br><div id="inputContainer" class="col-12 ip1">
-      <label id="inputLabel">Thanks For Your Submission....</label></div>`
+      <label id="inputLabel">Thanks For Your Submission..Click On SUBMIT Button to proceed</label></div>`
 	document.getElementById("subnn").innerHTML="<button type='button' arial-expanded='false' class='button' onclick='submissions()' >SUBMIT</button>";
 	}
 }
