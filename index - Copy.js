@@ -304,7 +304,7 @@ app.get('/stream/:streamId',(req,res) => {
     res.render('feedbackForm',{'name':req.session.nameId,'subjects_f':req.session.subjects_f});
 	}
 	req.session.streamId=req.params.streamId;
-    //console.log(req.session.streamId);
+    console.log(req.session.streamId);
 	res.end('done');
 });
 
@@ -313,7 +313,7 @@ app.get('/feedbackForm',(req,res) => {
 	var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 	var dict = {};
 	if(req.session.subjects_f==undefined && req.session.regId){
-		//console.log("feed1");
+		console.log("feed1");
 	
 	con.connect(function(err) {
 	if (err) throw err;
@@ -331,7 +331,7 @@ app.get('/feedbackForm',(req,res) => {
     res.render('feedbackForm',{'name':req.session.nameId,'subjects_f':req.session.subjects_f});
 	}
 	else{
-		//console.log("feed2");
+		console.log("feed2");
 		res.sendFile(__dirname+'/Public/index.html');
 	}
 });
@@ -339,21 +339,21 @@ app.get('/feedbackForm',(req,res) => {
 app.get('/feedbackForm/:feedsId', (req,res,next) => {
 	if(req.params.feedsId=="sub"){
 	if(req.session.sub){
-		//console.log(req.params.feedsId,req.session.sub);
+		console.log(req.params.feedsId,req.session.sub);
 		res.end(JSON.stringify({ sub: req.session.sub }));
 		}
 	else{
-		//console.log(req.params.feedsId);
+		console.log(req.params.feedsId);
 		res.end(JSON.stringify({ sub: [] }));
 		}
 	}
 	else if(req.params.feedsId=="idd"){
 		if(req.session.idd){
-		//console.log(req.params.feedsId);
+		console.log(req.params.feedsId);
 		res.end(JSON.stringify({ idd: req.session.idd }));
 		}
 		else{
-			//console.log(req.params.feedsId);
+			console.log(req.params.feedsId);
 			req.session.idd=0;
 			res.end(JSON.stringify({ idd: req.session.idd }));
 		}
@@ -369,7 +369,7 @@ app.get('/reviews',(req,res) => {
 	var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
 	type = req.query.type;
     id = req.query.id;
-    //console.log(id,type);
+    console.log(id,type);
     summary = []
 	data = {}
 
@@ -454,8 +454,8 @@ app.get('/reviews',(req,res) => {
 				values = values.slice(0,-5).map(x => parseFloat((x/5)*100).toFixed(1))
 				data.values = values;
 				
-				//console.log(data);
-				//console.log(b);
+				console.log(data);
+				console.log(b);
 				res.render('individualReviewFull',{data:data,starCount:b,votes:votes});
 			}
 	
@@ -477,7 +477,7 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 			res.end(JSON.stringify(req.session.qc));
 		}
 		else{
-			//console.log(req.body);
+			console.log(req.body);
 			var dict=[[],[]];
 			var tmpsub={};
 			var tmplab={};
@@ -522,22 +522,22 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 			});
 		}
 		get_info(function(result){
-			//console.log("Start");
-			//console.log(result);
+			console.log("Start");
+			console.log(result);
 			return res.end(JSON.stringify(result));
-			//console.log("end");
+			console.log("end");
 			});
 
 		}
-		//console.log("Dinesh check");
+		console.log("Dinesh check");
 	}
 	else if(req.params.feedsId=="subqore"){
 		if(req.session.qc)
 			res.end("Done");
 		else{
 		req.session.qc=req.body.qc;
-		//console.log("End--")
-		//console.log(req.session.qc);
+		console.log("End--")
+		console.log(req.session.qc);
 		res.end("Done");
 		}
 	}
@@ -557,14 +557,14 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 		function insertMultipleIntoTable(tableName, data) {
 		con.query(`INSERT INTO ${tableName} VALUES ?`, [data], (err, result) => {
         if (err) throw err;
-        //console.log("Number of records inserted into "+ tableName + ' table : ' + result.affectedRows);
+        console.log("Number of records inserted into "+ tableName + ' table : ' + result.affectedRows);
 			});
 		}
 		
 		function insertMultipleIntoTable(tableName, data) {
 		con.query(`INSERT INTO ${tableName} VALUES ?`, [data], (err, result) => {
         if (err) throw err;
-        //console.log("Number of records inserted into "+ tableName + ' table : ' + result.affectedRows);
+        console.log("Number of records inserted into "+ tableName + ' table : ' + result.affectedRows);
 			});
 		}
 		
@@ -609,14 +609,14 @@ app.post('/feedbackForm/:feedsId',(req,res) => {
 	}
 	else{
 	req.session.idd=parseInt(req.params.feedsId);
-    //console.log(req.session.sub, req.body);
+    console.log(req.session.sub, req.body);
 	res.end("Done");
 	}
 });
 
 app.post('/feedbackForm',(req,res) => { 
     req.session.sub = req.body.sub;
-    //console.log(req.session.sub, req.body);
+    console.log(req.session.sub, req.body);
 	res.end("Done");
 });
 
@@ -624,14 +624,14 @@ app.post('/stream',(req,res) => {
 	req.session.branchId=req.body.branch;
 	req.session.yearId=req.body.year;
 	req.session.sectionId=req.body.section;
-    //console.log(req.session);
+    console.log(req.session);
 	res.end("Done");
 });
 
 const server = http.createServer(app);
 
 server.listen(port, () => {
-  //console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
 
 /*

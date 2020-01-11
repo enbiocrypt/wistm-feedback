@@ -11,7 +11,7 @@ xhr.onreadystatechange = function() {
 	index_po=JSON.parse(xhr.responseText).idd;
 	subb="sub"+index_po;
 	eval("id"+index_po).style.background="dimgrey";
-	//console.log(xhr.responseText)
+	console.log(xhr.responseText)
    }
 }
 xhr.open('GET', 'feedbackForm/idd', false);
@@ -40,7 +40,7 @@ xhr.onreadystatechange = function() {
 	}
 	sub_branch.forEach(function m20(item, index)
 	{
-		//console.log(item,index);
+		console.log(item,index);
 		if(item)
 		{
 			if(document.getElementById("id"+index).className=='S'){
@@ -101,7 +101,7 @@ function submissions(){
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function() {
       if(this.responseText){
-		//console.log(this.responseText)
+		console.log(this.responseText)
 		names=this.responseText;
 		}
 	};
@@ -128,7 +128,7 @@ function submissions(){
 	xhr.open("POST", "feedbackForm/final_all", false);
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify({'op':pol}));
-	//console.log(pol);
+	console.log(pol);
 	alert("Thanks For your Submission, Get back to class Now!!")
 	window.location='/index.html';	
 }
@@ -167,7 +167,7 @@ function got(i){
   // --------------
 
   function check(){
-	  //console.log(position)
+	  console.log(position)
 	  for(var i=0;i<questions[position].question.length;i++)
 	  if(document.getElementById('star-1-2-'+(start+i)).checked){
 		  submission[start+i]=1;
@@ -225,10 +225,10 @@ function got(i){
 		}));
 	  }
 	  else{
-		  //console.log(submission,position);
+		  console.log(submission,position);
 		  return false;
 		  }
-	  //console.log(submission,position);
+	  console.log(submission,position);
 	  return true;
 	  
   }
@@ -328,7 +328,7 @@ function got(i){
   }
 
   function validate1(){
-	  //console.log(position);
+	  console.log(position);
 	if(check()){  
 		if(position<questions.length){
 		ok(function() {
