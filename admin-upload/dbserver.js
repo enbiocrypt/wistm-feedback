@@ -6,7 +6,7 @@ const multer = require('multer');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 client  = redis.createClient(6380, 'enbiocrypt.redis.cache.windows.net', 
-        {auth_pass: 'pQANwbSPqEA0rHqOpDznzOhJeb9sqyzWbZLWo6W5oZc=', tls: {servername: 'enbiocrypt.redis.cache.windows.net'}});
+        {auth_pass: '=', tls: {servername: 'enbiocrypt.redis.cache.windows.net'}});
 app.use(session({
     secret: 'ssshhhhhhhh',
     // create new redis store.
@@ -18,10 +18,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/node_modules'));
 var MySql = require('sync-mysql');
-var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+var connection = new MySql({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "", database: "newfeedbackdb", port: 3306});
 
 var mysql = require('mysql');
-var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "25aprial1998QQ!!", database: "newfeedbackdb", port: 3306});
+var con= mysql.createConnection({host: "enbiocrypt.mysql.database.azure.com", user: "enbiocrypt@enbiocrypt", password: "", database: "newfeedbackdb", port: 3306});
 
 //fs = require('fs-extra')
 app.use(bodyParser.urlencoded({extended: true}))
